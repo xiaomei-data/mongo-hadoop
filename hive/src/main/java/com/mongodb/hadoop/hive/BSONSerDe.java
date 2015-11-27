@@ -402,7 +402,7 @@ public class BSONSerDe implements SerDe {
             case SHORT:
                 return ((Number) value).shortValue();
             case STRING:
-                return value.toString();
+                return value.toString().replaceAll("\r|\n","");
             case TIMESTAMP:
                 if (value instanceof Date) {
                     return new Timestamp(((Date) value).getTime());
@@ -446,7 +446,6 @@ public class BSONSerDe implements SerDe {
 
         List<Object> struct = new ArrayList<Object>(structNames.size());
         for (String structName : structNames) {
-            LOG.warn("SWEET ------ structName is " + structName);
             if (structName.equals(OID)) {
                 struct.add(value.toString());
             } else if (structName.equals(BSON_TYPE)) {
